@@ -1,0 +1,13 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build folders
+bin/
+obj/
+
+# ASP.NET Core
+*.db
+*.db-shm
+*.db-wal
