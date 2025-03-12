@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Primitives;
+
 internal class Program
 {
     private static void Main(string[] args)
@@ -11,8 +14,29 @@ internal class Program
             var path = context.Request.Path.ToString().ToLower();
             var metodo = context.Request.Method;
 
-                switch (path)
+            switch (path)
                 {
+
+                case "/post-query-string":
+                    StreamReader reader = new StreamReader(context.Request.Body);
+                    var data = await reader.ReadToEndAsync();
+
+                    Dictionary<string, StringValues> queryDic =
+                    QueryHelpers.ParseQuery(data);
+
+                    foreach ( var kvp in queryDic)
+                    {
+                        var key = kvp.Key;
+                        var value = kvp.Value;
+                        await context.Response.WriteAsync($"Key: {key}, Value: {value}");
+                    }
+                break;
+                case "/auth":
+                    var authorization = context.Request.Headers.Authorization;
+
+                    await context.Response.WriteAsJsonAsync(authorization);
+                     break;
+
                     case "/query-string":
                     if(context.Request.Method == "GET")
                     {
