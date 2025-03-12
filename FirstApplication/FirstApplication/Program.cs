@@ -16,6 +16,60 @@ internal class Program
 
             switch (path)
                 {
+                case "/calculadora":
+                    if (context.Request.Method == "GET")
+                    {
+                        if(
+                        context.Request.Query.ContainsKey("firstNumber") &&
+                        context.Request.Query.ContainsKey("secondNumber") &&
+                        context.Request.Query.ContainsKey("operator")
+                        )
+                        {
+                            var firstNumber = Int32.Parse(context.Request.Query["firstNumber"]);
+                            var secondNumber = Int32.Parse(context.Request.Query["secondNumber"]);
+
+                            var numericOperator = context.Request.Query["operator"];
+                            switch (numericOperator)
+                            {
+                                case "soma":
+                                    var soma = firstNumber + secondNumber;
+                                    context.Response.StatusCode = 200;
+                                    await context.Response.WriteAsJsonAsync(soma);
+                                    return;
+
+                                case "subtracao":
+                                    var subtracao = firstNumber - secondNumber;
+                                    context.Response.StatusCode = 200;
+                                    await context.Response.WriteAsJsonAsync(subtracao);
+                                    return;
+
+                                case "multiplicacao":
+                                    var multiplicacao = firstNumber * secondNumber;
+                                    context.Response.StatusCode = 200;
+                                    await context.Response.WriteAsJsonAsync(multiplicacao);
+                                    return;
+
+                                case "divisao":
+                                    if (secondNumber == 0)
+                                    {
+                                        context.Response.StatusCode = 400;
+                                        await context.Response.WriteAsync("Divisão por zero não é permitida.");
+                                        return;
+                                    }
+                                    var divisao = firstNumber / secondNumber;
+                                    context.Response.StatusCode = 200;
+                                    await context.Response.WriteAsJsonAsync(divisao);
+                                    return;
+
+                                default:
+                                    context.Response.StatusCode = 400;
+                                    await context.Response.WriteAsync("Operador inválido. Use apenas +, -, / ou *.");
+                                    return;
+                            }
+
+                        }
+                    }
+                break;
 
                 case "/post-query-string":
                     StreamReader reader = new StreamReader(context.Request.Body);
