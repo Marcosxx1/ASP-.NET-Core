@@ -1,4 +1,6 @@
+using Lombok.NET;
 using MiddlewareExemplos.middleware;
+
 
 internal class Program
 {
@@ -14,13 +16,8 @@ internal class Program
             await next(context);
         });
 
-        app.Use(async(HttpContext context, RequestDelegate next) =>
-        {
-            await context.Response.WriteAsync(" | Ola do segundo middleware!! ");
-            await next(context);
-        });
-
-        app.UseCustomMiddleware();
+        //app.UseCustomMiddleware();
+        app.UseHelloCustomMiddleware();
 
         app.Use(async(HttpContext context, RequestDelegate next) =>
         {

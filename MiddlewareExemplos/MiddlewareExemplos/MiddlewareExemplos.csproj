@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Lombok.NET" Version="2.4.1" />
+  </ItemGroup>
+
 </Project>
