@@ -6,6 +6,7 @@ app.UseRouting();
 
 // Middleware customizado, após roteamento
 app.UseMiddlewareExample();
+app.UseConstraintExample();
 
 // Middleware para logar endpoint (apenas para debug)
 app.Use(async (HttpContext context, RequestDelegate next) =>
@@ -16,8 +17,15 @@ app.Use(async (HttpContext context, RequestDelegate next) =>
 });
 
 // Definindo endpoints
-app.UseEndpoints(endpoints =>
+app.UseEndpoints(async endpoints =>
 {
+
+    endpoints.MapGet("/usuario/int-constraint/{id:int?}", async context =>
+    {
+        await context.Response.WriteAsync("Chegou no contraint int corretamente");
+    });
+
+
     endpoints.MapGet("/usuario/{id}", async (context) => // Registrando rota para ser utilizada no middleware "UseMiddlewareExample"
     {
         await context.Response.WriteAsync("GET - Usuário encontrado\n");
