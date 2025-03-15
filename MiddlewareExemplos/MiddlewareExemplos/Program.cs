@@ -25,6 +25,16 @@ internal class Program
             await next(context);
         });
 
+        app.UseWhen(
+            context => context.Request.Query.ContainsKey("nome"),
+            app => {
+                app.Use(async (context, next) =>
+                {
+                    await context.Response.WriteAsync("Hello from middleware branch");
+                    await next();
+                });
+            });
+
         app.Run();
 
 
