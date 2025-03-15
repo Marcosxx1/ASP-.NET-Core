@@ -1,6 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
+// Ativa roteamento primeiro
+app.UseRouting();
+
+// Middleware customizado, após roteamento
+app.UseMiddlewareExample();
+
+// Middleware para logar endpoint (apenas para debug)
 app.Use(async (HttpContext context, RequestDelegate next) =>
 {
     Endpoint? endpoint = context.GetEndpoint();
@@ -8,31 +15,31 @@ app.Use(async (HttpContext context, RequestDelegate next) =>
     await next(context);
 });
 
-// Ativa roteamento
-app.UseRouting();
-
-// Criando endpoints
+// Definindo endpoints
 app.UseEndpoints(endpoints =>
 {
-    app.Use(async (HttpContext context, RequestDelegate next) =>
+    endpoints.MapGet("/usuario/{id}", async (context) => // Registrando rota para ser utilizada no middleware "UseMiddlewareExample"
     {
-        Endpoint? endpoint = context.GetEndpoint();
-        await context.Response.WriteAsync($"\nEndpoint: {endpoint?.DisplayName}");
-        await next(context);
+        await context.Response.WriteAsync("GET - Usuário encontrado\n");
     });
 
-    endpoints.MapGet("get", async (context) =>
+    endpoints.MapGet("/usuario/nome/{nomeUsuario}", async (context) => // Registrando rota para ser utilizada no middleware "UseMiddlewareExample
+    {
+        await context.Response.WriteAsync("GET - Nome do usuário encontrado\n");
+    });
+
+    endpoints.MapGet("/get", async (context) =>
     {
         await context.Response.WriteAsync("GET - Endpoint get");
     });
 
-    endpoints.MapPost("post", async (context) =>
+    endpoints.MapPost("/post", async (context) =>
     {
         await context.Response.WriteAsync("POST - Endpoint post");
     });
-
 });
 
+// Middleware final para endpoints inválidos
 app.Run(async (context) =>
 {
     string path = context.Request.Path;
