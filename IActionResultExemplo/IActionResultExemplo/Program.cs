@@ -30,7 +30,7 @@ namespace IActionResultExemplo
             builder.Services.AddScoped<IAtendenteService, AtendenteService>();
             builder.Services.AddScoped<IAtendenteRepository, AtendenteRepository>();
             builder.Services.AddScoped<IPasswordHasher<Atendente>, PasswordHasher<Atendente>>();
-
+              
             var app = builder.Build();
             app.UseMiddleware<ExceptionMiddleware>(); // UseMiddleware handles the RequestDelegate dependency
             app.MapControllers();
