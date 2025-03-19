@@ -8,18 +8,17 @@
 
   <ItemGroup>
     <Compile Remove="NovaPasta1\**" />
+    <Compile Remove="NovaPasta2\**" />
     <Compile Remove="NovaPasta3\**" />
     <Content Remove="NovaPasta1\**" />
+    <Content Remove="NovaPasta2\**" />
     <Content Remove="NovaPasta3\**" />
     <EmbeddedResource Remove="NovaPasta1\**" />
+    <EmbeddedResource Remove="NovaPasta2\**" />
     <EmbeddedResource Remove="NovaPasta3\**" />
     <None Remove="NovaPasta1\**" />
+    <None Remove="NovaPasta2\**" />
     <None Remove="NovaPasta3\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="NovaPasta2\" />
-    <Folder Include="NovaPasta\" />
   </ItemGroup>
 
 </Project>

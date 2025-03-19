@@ -1,7 +1,10 @@
-﻿namespace ModelBindingAndValidations
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ModelBindingAndValidations.model
 {
     public class Book
     {
+
         public int? BookId { get; set; }
         public string? Author { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ModelBindingAndValidations.model;
 using System.ComponentModel;
 using System.Transactions;
 
@@ -7,8 +8,21 @@ namespace ModelBindingAndValidations.controller
     public class HomeController : Controller
     {
 
+        [Route("user-oject-body")]
+        public IActionResult GetBookObjFromBody([FromBody] Book book)
+        {
+            return Content($"Book: {book}");
+        }
+
         [Route("book-object")]
-        public IActionResult GetBook()
+        public IActionResult GetBook(Book book)
+        {
+            /*
+             Esse vai aceitar o livro pelo corpo, pela query ou query string
+            Poderiamos utilizar [FromBody] [FromQuery] e por ai vai
+             */
+            return Content($" Book: {book}");
+        }
         [Route("from-route/{userId}/{bookId}")]
         public IActionResult FromRouteMethod([FromRoute] int userId, [FromRoute] int bookId)
         {
